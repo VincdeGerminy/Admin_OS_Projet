@@ -1,8 +1,15 @@
 #!/usr/bin/env python
 
+import json
 import psutil
 import os
+import datetime
+
+date=datetime.datetime.now()
+heure=str(date.hour)+':'+str(date.minute)+':'+str(date.second)
+mdy=str(date.month)+"/"+str(date.day)+"/"+str(date.year)
+
 
 cpuInfo=psutil.cpu_percent(interval=0.5)
 
-os.system('echo { "cpuUsage":'+ str(cpuInfo)+' }')
+print(json.dumps({'cpuUsage': cpuInfo, "heure":heure, "date":mdy}))
