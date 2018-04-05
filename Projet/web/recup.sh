@@ -12,3 +12,7 @@ grep -o '<title>.*</title>\|<pubDate>.*</pubDate>' dif.txt | sed 's/<title>/{"ti
 rm index.html
 rm dif.txt
 mv index.html.1 index.html
+
+./formatage.sh
+
+./garbageCollectorWeb.sh
