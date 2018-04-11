@@ -11,5 +11,6 @@ available='"available":'+str(ram.available)+', '
 percent='"percent":'+str(ram.percent)+', '
 date=datetime.datetime.now()
 heure='"heure": "'+str(date.hour)+":"+str(date.minute)+":"+str(date.second)+'", '
-date='"date":"'+str(date.month)+"/"+str(date.day)+"/"+str(date.year)+'"'
-os.system('echo \'{ ' + used + available + percent + heure + date + ' }\'') 
+date='"date": "'+str(date.month)+"/"+str(date.day)+"/"+str(date.year)+'", '
+host='"host": "'+os.uname()[1]+'"'
+os.system('echo \'{ ' + used + available + percent + heure + date + host + '}\'') 
