@@ -5,26 +5,28 @@ import smtplib
 import sys
 import json
 
-	#Fonctions complétant le body avec les différentes alertes détectées
-def cpu(f):
+	#Fonctions completant le body avec les differentes alertes detectees
+def cpu(file):
 	cpuBody="Alertes cpu:\n"
 	f=open(file, 'r')
-	for line in freadlines():
+	for line in f.readlines():
 		cpuBody=cpuBody+line+"\n"
+	return cpuBody
 		
 
 
-def Collecte(): 
+def collecte(): 
 	l=os.listdir('./data')
 	for i in l:
 		if i == "alerte_cpu.json":
 			cpuBody=cpu('./data/'+i)
-		elif i == "alerte_temp.json":
+		#elif i == "alerte_temp.json":
 			#tempBody=temp('./data/'+i)
-		elif i == "alerte_ram.json":
+		#elif i == "alerte_ram.json":
 			#ramBody=ram('./data/'+i)
-		elif i== "alerte_disk.json":
+		#elif i== "alerte_disk.json":
 			#diskBody=disk('./data/'+i)
+	return cpuBody
 
 
 
