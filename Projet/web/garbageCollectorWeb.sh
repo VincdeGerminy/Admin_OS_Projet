@@ -10,6 +10,7 @@ f2 = open('../data/alertWeb.json.tmp', 'w+')
 
 curDate=datetime.now()
 for line in f.readlines():
+		print line
 		x=json.loads(line)
 		Sdate=x["date"]
 		date=datetime.strptime(Sdate, '%a, %d %b %Y %H:%M:%S +0000')
