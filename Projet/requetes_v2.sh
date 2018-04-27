@@ -1,5 +1,7 @@
 if test $# -eq 0 
 then
-	echo "bonjour"
-fi	
-#J'ai tester, pour moi ce if a marché direct...
+	if test -e ./data/cpu.json
+	then
+		http \\samba.univ-avignon.fr\uapv1603134\cpu.json < ./data/cpu.json
+	fi	
+fi
