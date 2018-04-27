@@ -1,0 +1,1 @@
+http example.org/cpu.json > ./data/report.json
