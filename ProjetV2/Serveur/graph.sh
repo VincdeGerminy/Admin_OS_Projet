@@ -149,7 +149,7 @@ def disk(file, hList):
 		f.close()
 
 
-os.system('rm *.svg')
+os.system('rm ./graph/*.svg')
 #On recupere les differents hosts repertories
 hList=hostList()
 """
