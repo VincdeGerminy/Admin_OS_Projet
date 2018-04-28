@@ -1,3 +1,8 @@
+#Creation des repertoires data et config si ils n'existent pas
+mkdir -p ./data/
+mkdir -p ./config/
+mkdir -p ./graph/
+
 echo "saisissez l'adresse du serveur: "
 read add
 echo '{ "addServ": "'$add'"}' > config/user.json

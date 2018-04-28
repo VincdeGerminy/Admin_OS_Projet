@@ -47,7 +47,7 @@ def cpu(file, hList):
 			graph.title="host: "+host+" \nUtilisation du cpu en %"
 			graph.x_labels=dateL
 			graph.add('cpu usage (%)', cpuUsage)
-			graph.render_to_file("cpuUsage_"+host+".svg")
+			graph.render_to_file("./graph/cpuUsage_"+host+".svg")
 		f.close()
 
 """
@@ -74,7 +74,7 @@ def temp(file, hList):
 			graph.x_labels=dateL
 			graph.add('Temperature actuelle (deg c)', curent)
 			graph.add('Temperature critique (deg c)', critique)
-			graph.render_to_file("temp_"+host+".svg")
+			graph.render_to_file("./graph/temp_"+host+".svg")
 		f.close()
 
 """
@@ -98,7 +98,7 @@ def ram(file, hList):
 			graph.title="host: "+host+" \nUtilisation de la RAM en %"
 			graph.x_labels=dateL
 			graph.add('utilisation de la RAM (%)', percent)
-			graph.render_to_file("ram_"+host+".svg")
+			graph.render_to_file("./graph/ram_"+host+".svg")
 		f.close()
 
 """
@@ -122,7 +122,7 @@ def nbUsers(file, hList):
 			graph.title="host: "+host+" \nNombre d'utilisateurs"
 			graph.x_labels=dateL
 			graph.add("Nombre d'utilisateurs", nbUser)
-			graph.render_to_file("nb-users_"+host+".svg")
+			graph.render_to_file("./graph/nb-users_"+host+".svg")
 		f.close()
 
 """
@@ -146,11 +146,11 @@ def disk(file, hList):
 			graph.title="host: "+host+" \nUtilisation des disques en %"
 			graph.x_labels=dateL
 			graph.add("Utilisation des disques (%)", disk)
-			graph.render_to_file("disk_"+host+".svg")
+			graph.render_to_file("./graph/disk_"+host+".svg")
 		f.close()
 
 
-os.system('rm *.svg')
+os.system('rm ./graph/*.svg')
 #On recupere les differents hosts repertories
 hList=hostList()
 """
