@@ -22,4 +22,5 @@ if (os.path.exists("./data")):
 				f_new.write(line)
 		f.close()
 		f_new.close()		
-		os.system('mv ./data/new_'+i+' ./data/'+i)	
+		os.system('mv ./data/new_'+i+' ./data/'+i)
+		os.system('chmod o+w ./data/'+i)
