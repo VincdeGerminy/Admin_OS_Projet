@@ -21,3 +21,14 @@ then
 else
 	crontab < <(crontab -l ; echo "$freq cd `pwd` && ./collecteur.sh")
 fi
+
+
+echo "Saisissez la frequence de repetition de l'nvoie des donnees sur le serveur (au format cron: min h j m a)"
+echo "appuillez sur \"entrer\" pour la configuration par default (toutes les 20 minutes)"
+read freq
+if test -c $freq
+then
+	crontab < <(crontab -l ; echo "*/20 * * * * cd `pwd` && ./requetes.sh")
+else
+	crontab < <(crontab -l ; echo "$freq cd `pwd` && ./requetes.sh")
+fi
