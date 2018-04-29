@@ -26,35 +26,86 @@ def hostList():
 	return hList
 
 """
-	Fonction creant 1 graphe par host
-	contenant l'utilisation du CPU en %, en fonction de la date
+	si l'argument argHost est vide:
+		Fonction creant 1 graphe par host
+		contenant l'utilisation du CPU en %, en fonction de la date
+	sinon:
+		on cree un graphe pour l'host passe en argument
 """
-def cpu(file, hList):
-	for host in hList:
+def cpu(file, hList, argHost):
+	if(argHost==""):
+		for host in hList:
+			os.system("rm -f ./graph/cpuUsage_"+host+".svg")
+			f=open(file, 'r')
+			dateL= []
+			cpuUsage=[]
+			for line in f.readlines():
+				x=json.loads(line)
+				xHost=x["host"]
+				if host==xHost:
+					date=x["date"]+" - "+x["heure"]
+					dateL.append(date)
+					cpuUsage.append(x["cpuUsage"])
+			if len(dateL)!=0:
+				graph=pygal.StackedLine(fill=True)
+				graph.title="host: "+host+" \nUtilisation du cpu en %"
+				graph.x_labels=dateL
+				graph.add('cpu usage (%)', cpuUsage)
+				graph.render_to_file("./graph/cpuUsage_"+host+".svg")
+			f.close()
+	else:
+		os.system("rm -f ./graph/cpuUsage_"+argHost+".svg")
 		f=open(file, 'r')
 		dateL= []
 		cpuUsage=[]
 		for line in f.readlines():
 			x=json.loads(line)
 			xHost=x["host"]
-			if host==xHost:
+			if argHost==xHost:
 				date=x["date"]+" - "+x["heure"]
 				dateL.append(date)
 				cpuUsage.append(x["cpuUsage"])
 		if len(dateL)!=0:
 			graph=pygal.StackedLine(fill=True)
-			graph.title="host: "+host+" \nUtilisation du cpu en %"
+			graph.title="host: "+argHost+" \nUtilisation du cpu en %"
 			graph.x_labels=dateL
 			graph.add('cpu usage (%)', cpuUsage)
-			graph.render_to_file("cpuUsage_"+host+".svg")
+			graph.render_to_file("./graph/cpuUsage_"+argHost+".svg")
 		f.close()
 
 """
-	Fonction creant 1 graphe par host
-	contenant la temperature en degre celsius en fonction du temps
+	si l'argument argHost est vide:
+		Fonction creant 1 graphe par host
+		contenant la temperature en degre celsius en fonction du temps
+	sinon:
+		on cree un graphe pour l'host passe en argument
 """
-def temp(file, hList):
-	for host in hList:
+def temp(file, hList, argHost):
+	if(argHost==""):
+		for host in hList:
+			os.system("rm -f ./graph/temp_"+host+".svg")
+			f=open(file, 'r')
+			dateL=[]
+			curent=[]
+			critique=[]
+			for line in f.readlines():
+				x=json.loads(line)
+				xHost=x["host"]
+				if host==xHost:
+					date=x["date"]+" - "+x["heure"]
+					dateL.append(date)
+					curent.append(x["actuelle"])
+					critique.append(x["critique"])
+			if len(dateL)!=0:
+				graph=pygal.Line()
+				graph.title="host: "+host+" \nTemperatures en degre celsius"
+				graph.x_labels=dateL
+				graph.add('Temperature actuelle (deg c)', curent)
+				graph.add('Temperature critique (deg c)', critique)
+				graph.render_to_file("./graph/temp_"+host+".svg")
+			f.close()
+	else:
+		os.system("rm -f ./graph/temp_"+argHost+".svg")
 		f=open(file, 'r')
 		dateL=[]
 		curent=[]
@@ -62,94 +113,172 @@ def temp(file, hList):
 		for line in f.readlines():
 			x=json.loads(line)
 			xHost=x["host"]
-			if host==xHost:
+			if argHost==xHost:
 				date=x["date"]+" - "+x["heure"]
 				dateL.append(date)
 				curent.append(x["actuelle"])
 				critique.append(x["critique"])
 		if len(dateL)!=0:
 			graph=pygal.Line()
-			graph.title="host: "+host+" \nTemperatures en degre celsius"
+			graph.title="host: "+argHost+" \nTemperatures en degre celsius"
 			graph.x_labels=dateL
 			graph.add('Temperature actuelle (deg c)', curent)
 			graph.add('Temperature critique (deg c)', critique)
-			graph.render_to_file("temp_"+host+".svg")
+			graph.render_to_file("./graph/temp_"+argHost+".svg")
 		f.close()
 
 """
-	Fonction creant 1 graphe par host
-	contenant l'utilisation de la RAM en %, en fonction de la date
+	Si l'argument argHost est vide:
+		Fonction creant 1 graphe par host
+		contenant l'utilisation de la RAM en %, en fonction de la date
+	sinon:
+		on cree un graphe pour l'host passe en argument
 """
-def ram(file, hList):
-	for host in hList:
+def ram(file, hList, argHost):
+	if(argHost==""):	
+		for host in hList:
+			os.system("rm -f ./graph/ram_"+host+".svg")
+			f=open(file, 'r')
+			dateL=[]
+			percent=[]
+			for line in f.readlines():
+				x=json.loads(line)
+				xHost=x["host"]
+				if host==xHost:
+					date=x["date"]+" - "+x["heure"]
+					dateL.append(date)
+					percent.append(x['percent'])
+			if len(dateL)!=0:
+				graph=pygal.StackedLine(fill=True)
+				graph.title="host: "+host+" \nUtilisation de la RAM en %"
+				graph.x_labels=dateL
+				graph.add('utilisation de la RAM (%)', percent)
+				graph.render_to_file("./graph/ram_"+host+".svg")
+			f.close()
+	else:
+		os.system("rm -f ./graph/ram_"+argHost+".svg")
 		f=open(file, 'r')
 		dateL=[]
 		percent=[]
 		for line in f.readlines():
 			x=json.loads(line)
 			xHost=x["host"]
-			if host==xHost:
+			if argHost==xHost:
 				date=x["date"]+" - "+x["heure"]
 				dateL.append(date)
 				percent.append(x['percent'])
 		if len(dateL)!=0:
 			graph=pygal.StackedLine(fill=True)
-			graph.title="host: "+host+" \nUtilisation de la RAM en %"
+			graph.title="host: "+argHost+" \nUtilisation de la RAM en %"
 			graph.x_labels=dateL
 			graph.add('utilisation de la RAM (%)', percent)
-			graph.render_to_file("ram_"+host+".svg")
+			graph.render_to_file("./graph/ram_"+argHost+".svg")
 		f.close()
 
 """
-	Fonction creant 1 graphe par host
-	contenant le nombre d'utilisateurs, en fonction de la date
+	Si l'argument argHost est vide:
+		Fonction creant 1 graphe par host
+		contenant le nombre d'utilisateurs, en fonction de la date
+	sinon:
+		on cree un graphe pour l'host passe en argument
 """
-def nbUsers(file, hList):
-	for host in hList:
+def nbUsers(file, hList, argHost):
+	if(argHost==""):
+		for host in hList:
+			os.system("rm -f ./graph/nb-users_"+host+".svg")
+			f=open(file, 'r')
+			dateL=[]
+			nbUser=[]
+			for line in f.readlines():
+				x=json.loads(line)
+				xHost=x["host"]
+				if host==xHost:
+					date=x["date"]+" - "+x["heure"]
+					dateL.append(date)
+					nbUser.append(x["nbusers"])
+			if len(dateL)!=0:
+				graph=pygal.StackedLine(fill=True)
+				graph.title="host: "+host+" \nNombre d'utilisateurs"
+				graph.x_labels=dateL
+				graph.add("Nombre d'utilisateurs", nbUser)
+				graph.render_to_file("./graph/nb-users_"+host+".svg")
+			f.close()
+	else:
+		os.system("rm -f ./graph/nb-users_"+argHost+".svg")
 		f=open(file, 'r')
 		dateL=[]
 		nbUser=[]
 		for line in f.readlines():
 			x=json.loads(line)
 			xHost=x["host"]
-			if host==xHost:
+			if argHost==xHost:
 				date=x["date"]+" - "+x["heure"]
 				dateL.append(date)
 				nbUser.append(x["nbusers"])
 		if len(dateL)!=0:
 			graph=pygal.StackedLine(fill=True)
-			graph.title="host: "+host+" \nNombre d'utilisateurs"
+			graph.title="host: "+argHost+" \nNombre d'utilisateurs"
 			graph.x_labels=dateL
 			graph.add("Nombre d'utilisateurs", nbUser)
-			graph.render_to_file("nb-users_"+host+".svg")
+			graph.render_to_file("./graph/nb-users_"+argHost+".svg")
 		f.close()
 
 """
-	Fonction creant 1 graphe par host
-	contenant l'utilisation des disques en %, en fonction de la date
+	Si l'argument argHost est vide:
+		Fonction creant 1 graphe par host
+		contenant l'utilisation des disques en %, en fonction de la date
+	sinon:
+		on cree un graphe pour l'host passe en argument
 """
-def disk(file, hList):
-	for host in hList:
+def disk(file, hList, argHost):
+	if(argHost==""):
+		for host in hList:
+			os.system("rm -f ./graph/disk_"+host+".svg")
+			f=open(file, 'r')
+			dateL=[]
+			disk=[]
+			for line in f.readlines():
+				x=json.loads(line)
+				xHost=x["host"]
+				if host==xHost:
+					date=x["date"]+" - "+x["heure"]
+					dateL.append(date)
+					disk.append(x["diskUsagePercent"])
+			if len(dateL)!=0:
+				graph=pygal.StackedLine(fill=True)
+				graph.title="host: "+host+" \nUtilisation des disques en %"
+				graph.x_labels=dateL
+				graph.add("Utilisation des disques (%)", disk)
+				graph.render_to_file("./graph/disk_"+host+".svg")
+			f.close()
+	else:
+		os.system("rm -f ./graph/disk_"+argHost+".svg")
 		f=open(file, 'r')
 		dateL=[]
 		disk=[]
 		for line in f.readlines():
 			x=json.loads(line)
 			xHost=x["host"]
-			if host==xHost:
+			if argHost==xHost:
 				date=x["date"]+" - "+x["heure"]
 				dateL.append(date)
 				disk.append(x["diskUsagePercent"])
 		if len(dateL)!=0:
 			graph=pygal.StackedLine(fill=True)
-			graph.title="host: "+host+" \nUtilisation des disques en %"
+			graph.title="host: "+argHost+" \nUtilisation des disques en %"
 			graph.x_labels=dateL
 			graph.add("Utilisation des disques (%)", disk)
-			graph.render_to_file("disk_"+host+".svg")
+			graph.render_to_file("./graph/disk_"+argHost+".svg")
 		f.close()
 
+"""
+Arguments:
+-vide: on fait tous les graphes possible de tous les utilisateurs
+-1 argument:(ype ou host) soit le type de gragrphe pour tous les utilisateurs
+	soit tous les graphes de tel machine
+-2 arguments:(type, host) on fait le graphe de la machine du type choisi
+"""
 
-os.system('rm ./graph/*.svg')
 #On recupere les differents hosts repertories
 hList=hostList()
 """
@@ -161,24 +290,47 @@ if(len(sys.argv)==1):
 	l=os.listdir('./data')
 	for i in l:
 		if i == "cpu.json":
-			cpu('./data/'+i, hList)
+			cpu('./data/'+i, hList, "")
 		elif i == "temp.json":
-			temp('./data/'+i, hList)
+			temp('./data/'+i, hList, "")
 		elif i == "ram.json":
-			ram('./data/'+i, hList)
+			ram('./data/'+i, hList, "")
 		elif i == "nb-users.json":
-			nbUsers('./data/'+i, hList)
+			nbUsers('./data/'+i, hList, "")
 		elif i== "disk.json":
-			disk('./data/'+i, hList)
-else:
-	for i in range(1, len(sys.argv)):
-		if sys.argv[i]=="cpu":
-			cpu('./data/'+sys.argv[i]+'.json', hList)
-		elif sys.argv[i]=="temp":
-			temp('./data/'+sys.argv[i]+'.json', hList)
-		elif sys.argv[i]=="ram":
-			ram('./data/'+sys.argv[i]+'.json', hList)
-		elif sys.argv[i]=="nb-users":
-			nbUsers('./data/'+sys.argv[i]+'.json', hList)
-		elif sys.argv[i]=="disk":
-			disk('./data/'+sys.argv[i]+'.json', hList)
+			disk('./data/'+i, hList, "")
+elif(len(sys.argv)==2):
+	if sys.argv[1]=="cpu":
+		cpu('./data/'+sys.argv[1]+'.json', hList, "")
+	elif sys.argv[1]=="temp":
+		temp('./data/'+sys.argv[1]+'.json', hList, "")
+	elif sys.argv[1]=="ram":
+		ram('./data/'+sys.argv[1]+'.json', hList, "")
+	elif sys.argv[1]=="nb-users":
+		nbUsers('./data/'+sys.argv[1]+'.json', hList, "")
+	elif sys.argv[1]=="disk":
+		disk('./data/'+sys.argv[1]+'.json', hList, "")
+	else:
+		l=os.listdir('./data')
+		for i in l:
+			if i == "cpu.json":
+				cpu('./data/'+i, hList, sys.argv[1])
+			elif i == "temp.json":
+				temp('./data/'+i, hList, sys.argv[1])
+			elif i == "ram.json":
+				ram('./data/'+i, hList, sys.argv[1])
+			elif i == "nb-users.json":
+				nbUsers('./data/'+i, hList, sys.argv[1])
+			elif i== "disk.json":
+				disk('./data/'+i, hList, sys.argv[1])
+elif(len(sys.argv)==3):
+	if sys.argv[1]=="cpu":
+		cpu('./data/'+sys.argv[1]+'.json', hList, sys.argv[2])
+	elif sys.argv[1]=="temp":
+		temp('./data/'+sys.argv[1]+'.json', hList, sys.argv[2])
+	elif sys.argv[1]=="ram":
+		ram('./data/'+sys.argv[1]+'.json', hList, sys.argv[2])
+	elif sys.argv[1]=="nb-users":
+		nbUsers('./data/'+sys.argv[1]+'.json', hList, sys.argv[2])
+	elif sys.argv[1]=="disk":
+		disk('./data/'+sys.argv[1]+'.json', hList, sys.argv[2])
