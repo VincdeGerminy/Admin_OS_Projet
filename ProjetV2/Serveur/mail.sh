@@ -52,9 +52,7 @@ f.close()
 mailServer='smtp.gmail.com'
 mailServerPort=587
 
-#fromAddr='testes0974@gmail.com'
 fromAddr=mailOrigin
-#toAddr='delfeilcasanova@gmail.com'
 toAddr=mailDest
 
 Head="Alertes:\n"
@@ -71,7 +69,6 @@ if(Body!=""):
 	s=smtplib.SMTP(mailServer, mailServerPort)
 	s.set_debuglevel(1)
 	s.starttls()
-	#s.login("testes0974@gmail.com", "DCVdG2018")
 	s.login(mailOrigin, mdpMail)
 	s.sendmail(fromAddr, toAddr, emailMessage)
 	s.quit()
