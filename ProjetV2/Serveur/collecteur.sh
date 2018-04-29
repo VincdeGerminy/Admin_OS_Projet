@@ -13,6 +13,7 @@ then
 	if [ ! -f ./data/nb-users.json ] 
 	then
 		./sonde/sonde_nb-users.sh > data/nb-users.json
+		chmod o+w ./data/nb-users.json
 	else
 		./sonde/sonde_nb-users.sh >> data/nb-users.json
 	fi
@@ -20,6 +21,7 @@ then
 	if [ ! -f ./data/temp.json ] 
 	then
 		python ./sonde/sonde_temp.py > data/temp.json
+		chmod o+w ./data/temp.json
 	else
 		python ./sonde/sonde_temp.py >> data/temp.json
 	fi
@@ -27,6 +29,7 @@ then
 	if [ ! -f ./data/ram.json ] 
 	then
 		./sonde/sonde_ram.sh > data/ram.json
+		chmod o+w ./data/ram.json
 	else
 		./sonde/sonde_ram.sh >> data/ram.json
 	fi
@@ -34,6 +37,7 @@ then
 	if [ ! -f ./data/cpu.json ] 
 	then
 		./sonde/sonde_cpu.sh > data/cpu.json
+		chmod o+w ./data/cpu.json
 	else
 		./sonde/sonde_cpu.sh >> data/cpu.json
 	fi
@@ -41,6 +45,7 @@ then
 	if [ ! -f ./data/disk.json ] 
 	then
 		./sonde/sonde_disk.sh > data/disk.json
+		chmod o+w ./data/disk.json
 	else
 		./sonde/sonde_disk.sh >> data/disk.json
 	fi
@@ -51,6 +56,7 @@ else
 		if  [ ! -f ./data/$1.json ]
 		then
 			./sonde/sonde_$1.sh > data/$1.json
+			chmod o+w ./data/$1.json
 		else 
 			./sonde/sonde_$1.sh >> data/$1.json
 		fi	
@@ -60,6 +66,7 @@ else
 			if 	[ ! -f ./data/$1.json ]
 			then
 				python ./sonde/sonde_temp.py > data/temp.json
+				chmod o+w ./data/temp.json
 			else
 				python ./sonde/sonde_temp.py >> data/temp.json	
 			fi	
