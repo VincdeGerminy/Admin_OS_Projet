@@ -5,7 +5,7 @@ import os
 import requests
 
 #Recuperation de l'adresse du serveur
-f=open("../config/user.json", 'r')
+f=open("./config/user.json", 'r')
 for line in f.readlines():
 	x=json.loads(line)
 	add=x["addServ"]
