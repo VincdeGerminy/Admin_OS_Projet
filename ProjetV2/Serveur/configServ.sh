@@ -3,8 +3,6 @@ mkdir -p ./data/
 mkdir -p ./config/
 mkdir -p ./graph/
 
-echo "saisissez l'adresse du serveur: "
-read add
 
 echo "Saisissez l'adresse mail sur laquelle seront envoyer les alertes: "
 read mailDest
@@ -28,7 +26,7 @@ read diskSeuil
 echo "Saisissez le seuil d'alerte pour le pourcentage d'utilisation de la RAM: "
 read ramSeuil
 
-echo '{ "addServ": "'$add'",  "mailDest": "'$mailDest'", "mailOrigin": "'$mailOrig'", "mdpMail": "'$mdp'", "cpuSeuil": "'$cpuPour'", "tempSeuil": "'$tempSeuil'", "diskSeuil": "'$diskSeuil'", "ramSeuil": "'$ramSeuil'"}' > config/serveur.json
+echo '{"mailDest": "'$mailDest'", "mailOrigin": "'$mailOrig'", "mdpMail": "'$mdp'", "cpuSeuil": "'$cpuPour'", "tempSeuil": "'$tempSeuil'", "diskSeuil": "'$diskSeuil'", "ramSeuil": "'$ramSeuil'"}' > config/serveur.json
 
 #Permet de rendre exécutables les differents scriptes (sinon la crontab ne pouras pas les lencer)
 chmod -R +x ./*.sh
@@ -42,7 +40,7 @@ cd ../
 
 #base:
 #collecte: */1 * * * * (toutes les minutes)
-#verif crise: */15 * * * * (toutes les 15 minutes)
+#verif crise: * */2 * * * (toutes les 2 heures)
 #verif alerte web: 0 20 * * * (toutes les jours à 20h)
 #Création des graphes: 0 20 * * * (toutes les jours à 20h)
 
@@ -58,11 +56,11 @@ fi
 
 
 echo "Saisissez la frequence de repetition de la detection de crise (au format cron: min h j m a)"
-echo "appuillez sur \"entrer\" pour la configuration par default (toutes les 15 minutes)"
+echo "appuillez sur \"entrer\" pour la configuration par default (toutes les 2 heures)"
 read freq
 if test -c $freq
 then
-	crontab < <(crontab -l ; echo "*/15 * * * * cd `pwd` && ./detect_crise.sh")
+	crontab < <(crontab -l ; echo "* */2 * * * cd `pwd` && ./detect_crise.sh")
 else
 	crontab < <(crontab -l ; echo "$freq cd `pwd` && ./detect_crise.sh")
 fi
